@@ -38,13 +38,36 @@ string Board::toString() const {
 }
 
 void Board::compress(int dir) {
-	
+	for(auto k(0);k<3;k++) {
+		for(auto i(0);i<4;i++) {
+			//cout << "First loop : " << i << "/" << endl;
+			for(auto j(0);j<4;j++) {
+				//cout << i << "/" << j << endl;
+				if(this->board[i][j] != 0) {
+					vector<int> nextPos{i + DIRECTIONS[dir][0], j + DIRECTIONS[dir][1]};
+					//cout << "Position : " << i << "/" << j << " " << nextPos[0] << "/" << nextPos[1] << endl;
+					// Verification that nextPos in the board
+					if(nextPos[0] < 4 && nextPos[0] >= 0 && nextPos[1] < 4 && nextPos[1] >= 0) {
+						//cout << "First Check " << i << "/" << j << endl;
+						// Verification that nextPos is empty (= 0)
+						if(this->board[nextPos[0]][nextPos[1]] == 0) {
+							move({i, j}, nextPos);
+						}
+					}
+				} else {
+					//cout << "Passing : " << i << "/" << j << endl;
+				}
+			}
+		}
+	}
 }
 
 void Board::move(vector<int> from, vector<int> to) {
 	auto val = this->board[from[0]][from[1]];
 	this->board[from[0]][from[1]] = 0;
 	this->board[to[0]][to[1]] = val;
+	addEmptySquare(from);
+	removeEmptySquare(to);
 }
 
 void Board::merge(int dir) {

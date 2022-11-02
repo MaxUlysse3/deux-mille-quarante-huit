@@ -9,12 +9,12 @@ class Board {
 	private:
 		int board[4][4];
 		std::vector<std::vector<int>> emptySquares;
-		const std::vector<std::vector<int>> directions{{1,0}, // 0 for up
-			{0,1}, //1 for right
-			{-1,0}, //2 for down
-			{0,-1}}; //3 for left
 		void addEmptySquare(std::vector<int> pos);
 		void removeEmptySquare(std::vector<int> pos);
+		const std::vector<std::vector<int>> DIRECTIONS{{0,1}, // 0 for up
+			{1,0}, //1 for right
+			{0,-1}, //2 for down
+			{-1,0}}; //3 for left
 
 	public:
 		Board();

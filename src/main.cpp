@@ -12,6 +12,7 @@ int main() {
 	cout << board.getStringEmptySquares() << endl;
 
 	board.setSquare({2, 0}, 128);
+	board.compress(3);
 	cout << board.toString() << endl;
 	cout << board.getStringEmptySquares() << endl;
 
