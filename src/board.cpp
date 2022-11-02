@@ -18,6 +18,7 @@ Board::Board() : emptySquares() {
 		}
 	}
 	addNew();
+	addNew();
 }
 
 string Board::toString() const {
@@ -70,8 +71,33 @@ void Board::move(vector<int> from, vector<int> to) {
 	removeEmptySquare(to);
 }
 
-void Board::merge(int dir) {
-	
+bool Board::merge(int dir) {
+	bool win(false);
+	for(auto k(0);k<2;k++) {
+		for(auto i(0);i<4;i++) {
+			
+			for(auto j(0);j<4;j++) {
+				// Do not calculate if square is empty
+				if(this->board[i][j] != 0) {
+					vector<int> nextPos{i + DIRECTIONS[dir][0], j + DIRECTIONS[dir][1]};
+					
+					// Verification that nexPos is in the board
+					if(nextPos[0] < 4 && nextPos[0] >= 0 && nextPos[1] < 4 && nextPos[1] >= 0) {
+						// Verification that the square and nextPos have the same value
+						if(this->board[i][j] == this->board[nextPos[0]][nextPos[1]]) {
+							this->board[nextPos[0]][nextPos[1]] += this->board[i][j];
+							this->board[i][j] = 0;
+							addEmptySquare({i, j});
+							if(this->board[nextPos[0]][nextPos[1]] == 2048) {
+								win = true;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return win;
 }
 
 void Board::addNew() {
@@ -82,8 +108,12 @@ void Board::addNew() {
 	this->board[co[0]][co[1]] = rand() % 4 == 0 ? 4 : 2;
 }
 
-void Board::step(int dir) {
-	
+bool Board::step(int dir) {
+	compress(dir);
+	bool win(merge(dir));
+	compress(dir);
+	addNew();
+	return win;
 }
 
 void Board::setSquare(vector<int> coords, int val) {
@@ -122,6 +152,10 @@ string Board::getStringEmptySquares() const {
 
 	}
 	return ss.str();
+}
+
+vector<vector<int>> Board::getEmptySquares() const {
+	return this->emptySquares;
 }
 
 Board::~Board() {

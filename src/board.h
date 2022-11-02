@@ -11,9 +11,9 @@ class Board {
 		std::vector<std::vector<int>> emptySquares;
 		void addEmptySquare(std::vector<int> pos);
 		void removeEmptySquare(std::vector<int> pos);
-		const std::vector<std::vector<int>> DIRECTIONS{{0,1}, // 0 for up
+		const std::vector<std::vector<int>> DIRECTIONS{{0,-1}, // 0 for up
 			{1,0}, //1 for right
-			{0,-1}, //2 for down
+			{0,1}, //2 for down
 			{-1,0}}; //3 for left
 
 	public:
@@ -21,11 +21,12 @@ class Board {
 		std::string toString() const;
 		void compress(int dir);
 		void move(std::vector<int> from, std::vector<int> to);
-		void merge(int dir);
+		bool merge(int dir);
 		void addNew();
-		void step(int dir);
+		bool step(int dir);
 		void setSquare(std::vector<int> coords, int val);
 		std::string getStringEmptySquares() const;
+		std::vector<std::vector<int>> getEmptySquares() const;
 		~Board();
 		
 };

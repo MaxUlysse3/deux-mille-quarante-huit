@@ -1,20 +1,37 @@
 #include <iostream>
 #include <string>
+#include <map>
 
 #include "board.h"
 
 using namespace std;
 
 int main() {
-	cout << "Je suis une licorne" << endl;
+	cout << "Les commandes sont : q -> gauche ; z -> haut ; s -> bas ; d -> droite." << endl << endl;
+	
 	Board board;
-	cout << board.toString() << endl;
-	cout << board.getStringEmptySquares() << endl;
+	const map<char, int> dirs{{'z', 0}, {'d', 1}, {'s', 2}, {'q', 3}};
+	bool continueGame(true);
 
-	board.setSquare({2, 0}, 128);
-	board.compress(3);
-	cout << board.toString() << endl;
-	cout << board.getStringEmptySquares() << endl;
+	while(continueGame) {
+		cout << board.toString() << endl;
+		cout << "Que voulez-vous jouer ? : ";
+		char ans;
+		cin >> ans;
+		if (ans == 'n') {
+			continueGame = false;
+			continue;
+		}
+		if (dirs.count(ans) == 0) {
+			cout << "Ce n'est pas une des commandes." << endl;
+			continue;
+		} else {
+			if(board.step(dirs.at(ans))) {
+				cout << "Bravo, vous avez gagné !!" << endl;
+				continueGame = false;
+			}
+		}
+	}
 
 	return 1;
 }
