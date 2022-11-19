@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 set(CMAKE_CXX_STANDARD 11)
-=======
 cmake_minimum_required(VERSION 3.22)
 set(CMAKE_CXX_STANDARD 20)
->>>>>>> 333b091176b64724ba082a3a54ec1bdb1e92a84d
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project(Deux_mille_quarante_huit)
